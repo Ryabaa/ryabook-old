@@ -1,8 +1,12 @@
+require("dotenv").config();
 const express = require("express");
 const fs = require("fs");
 const path = require("path");
 const cors = require("cors");
-const app = express();
+const userRouter = require("./src/routers/userRouter");
+
+const app = express(),
+    port = process.env.PORT;
 
 app.use(express.json());
 app.use((req, res, next) => {
@@ -10,10 +14,13 @@ app.use((req, res, next) => {
     res.header("Access-Control-Allow-Methods", "GET, PUT, POST, DELETE");
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
     res.header("Content-Type", "application/json");
+    res.status(500).send("Something broke!");
     next();
 });
 app.use(cors());
 
-app.listen(4000, () => {
-    console.log(`Server started: http://localhost:4000`);
+app.use("/signup", userRouter);
+
+app.listen(port, () => {
+    console.log(`Server started on http://${process.env.DOMAIN}:${port}`);
 });

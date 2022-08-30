@@ -1,13 +1,15 @@
 import { ChangeEvent, FC } from "react";
 
+import { IField } from "../../types/form";
+
 interface IInput {
-    field: any;
-    editData: (dataField: string, value: any) => void;
+    field: IField;
+    editData: (key: string, value: any) => void;
 }
 
 const Input: FC<IInput> = ({ field, editData }) => {
     const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
-        editData(field.value, event.target.value);
+        editData(field.key, event.target.value);
     };
 
     return <input type={field.type} placeholder={field.placeholder} onChange={handleInputChange} />;
