@@ -1,11 +1,18 @@
 const express = require("express");
+const { check } = require("express-validator");
+const validation = require("../middlewares/validation");
+const AuthController = require("../controllers/authController");
 
-const userRouter = new express.Router();
+const authController = new AuthController();
+const router = new express.Router();
 
-userRouter.post("/succes", async (req, res) => {
-    const data = req.body;
-    console.log(data);
-    res.send("succes");
-});
+router.post(
+    "/signup",
+    [
+        check("username", "Username cannot be empty").notEmpty(),
+        check("password", "Password must be more than 6 or 16 characters").isLength({ min: 6, max: 16 }),
+    ],
+    authController.registration
+);
 
-module.exports = userRouter;
+module.exports = router;

@@ -1,18 +1,18 @@
-const db = require("../ext/db");
+const mongoose = require("mongoose");
 
-const schema = new db.Schema({
-    login: {
+const userSchema = new mongoose.Schema({
+    username: {
         type: String,
         required: true,
-        maxLength: 255,
-        minLength: 2,
+        unique: true,
         trim: true,
     },
+    password: {
+        type: String,
+        required: true,
+        minLength: 6,
+    },
+    roles: [{ type: String, ref: "Role" }],
 });
 
-shema.methods.getLol = () => {
-    let lol = this.login;
-    return lol.toUpperCase();
-};
-
-module.exports = db.model("User", schema);
+module.exports = mongoose.model("User", userSchema);
