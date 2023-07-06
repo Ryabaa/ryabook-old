@@ -14,9 +14,15 @@ export default createGlobalStyle`
     border: 0;
     padding: 0;
     margin: 0;
+    color: #f5f5f5;
 }
 
-button {
+button, input[type="submit"] {
     cursor: pointer;
+    transition: all .3s ease;
+}
+
+input, button {
+    background-color: unset;
 }
 `;

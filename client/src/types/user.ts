@@ -1,9 +1,9 @@
 export interface IUserAccount {
-    login: string;
-    password_1: string;
-    password_2: string;
+    avatar: File;
+    username: string;
+    password: string;
+    password_confirm: string;
     email: string;
-    phone: string;
 }
 
 export interface IUserProfile {

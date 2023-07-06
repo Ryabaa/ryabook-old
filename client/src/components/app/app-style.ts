@@ -4,8 +4,10 @@ export default styled.div`
     height: 100vh;
     display: flex;
     justify-content: center;
-    align-items: center;
+    align-items: start;
     flex-direction: column;
-    background: linear-gradient(-20deg, #474747 0%, #2b2b2b 100%), no-repeat;
+    position: relative;
+    width: 100%;
+    background: #040405;
     background-size: cover;
 `;

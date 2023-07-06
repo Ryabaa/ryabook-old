@@ -6,27 +6,22 @@ class authController {
         try {
             const errors = validationResult(req);
             if (!errors.isEmpty()) {
-                return res.send({ message: "Invalid registration data", errors });
+                return res.status(203).json({ message: errors.errors[0].msg });
             }
             const result = await service.registration(req.body);
-            res.status(201).send(result);
+            res.status(201).json(result);
         } catch (error) {
             console.log(error);
-            res.status(400).send({ error: "Registration error" });
+            res.status(400).json({ error: "Registration error" });
         }
     }
     async login(req, res) {
         try {
+            const result = await service.login(req.body);
+            res.status(201).json(result);
         } catch (error) {
             console.log(error);
-            res.status(400).send({ error: "Login error" });
-        }
-    }
-    async getUsers(req, res) {
-        try {
-        } catch (error) {
-            console.log(error);
-            res.status(400).send({ error: "" });
+            res.status(400).json({ error: "Login error" });
         }
     }
 }

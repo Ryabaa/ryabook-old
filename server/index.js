@@ -2,6 +2,8 @@ require("dotenv").config();
 const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
+
+const authRouter = require("./src/routers/authRouter");
 const userRouter = require("./src/routers/userRouter");
 
 const app = express(),
@@ -17,7 +19,10 @@ app.use((req, res, next) => {
 });
 app.use(cors());
 
+app.use("/auth", authRouter);
 app.use("/user", userRouter);
+
+app.use(express.static(__dirname));
 
 const start = async () => {
     try {

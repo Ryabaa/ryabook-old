@@ -1,17 +1,19 @@
-import { FC, FormEvent, ReactNode, useCallback, useState } from "react";
+import { FC, FormEvent, useCallback, useState } from "react";
 
-import StyledForm from "../../styles/form";
 import { IField } from "../../types/form";
+
+import StyledForm from "./form-style";
+import Container from "../../styles/container";
 
 import Input from "./Input";
 
 interface IForm {
     formSubmit: (data: any) => void;
     fields: IField[];
-    children?: ReactNode;
+    submitName: string;
 }
 
-const Form: FC<IForm> = ({ formSubmit, fields, children }) => {
+const Form: FC<IForm> = ({ formSubmit, fields, submitName }) => {
     const [data, setData] = useState({});
 
     const editData = useCallback(
@@ -22,20 +24,29 @@ const Form: FC<IForm> = ({ formSubmit, fields, children }) => {
     );
 
     const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+        console.log(data);
         event.preventDefault();
         formSubmit(data);
     };
 
     return (
         <StyledForm onSubmit={handleSubmit}>
-            {children}
-            {fields.map((field, index) => (
-                <div key={index}>
-                    <label>{field.value}: </label>
-                    <Input field={field} editData={editData} />
-                </div>
-            ))}
-            <input type="submit" value="submit" />
+            <Container direction="column" row="5px" background="none">
+                {fields
+                    .filter((field) => field.key === "avatar")
+                    .map((field, index) => (
+                        <Input field={field} editData={editData} />
+                    ))}
+                {fields
+                    .filter((field) => field.key !== "avatar")
+                    .map((field, index) => (
+                        <Container background="#cfd0d11a" position="relative" align="center" width="300px" key={index}>
+                            <label>{field.value} </label>
+                            <Input field={field} editData={editData} />
+                        </Container>
+                    ))}
+            </Container>
+            <input type="submit" value={submitName} />
         </StyledForm>
     );
 };
